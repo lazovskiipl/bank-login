@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  // try {
+  try {
     // Check if the email exists
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
@@ -50,9 +50,9 @@ router.post('/login', async (req, res) => {
     // Generate JWT token
     const token = jwt.sign({ email: user.email }, config.secret);
     res.status(200).json({ token });
-  // } catch (error) {
-  //   res.status(500).json({ error: 'Internal server error' });
-  // }
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 router.get('/user', verifyToken, async (req, res) => {
